@@ -1,41 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Hello World!</title>
- <!-- Savieno html failu ar css failu-->
-    <link rel="stylesheet" href="/style.css" />
- </head>
- 
-  
-  <body background="https://cdn.glitch.me/2a017ae8-ffec-42f6-b70a-e5b4d4062e2b%2Fcbb25329-c464-4029-86b3-16b81020a6fa.image.png?v=1634061629890">
-    
- <header> 
-   
-     
-     <h1 align="center"><font color="#FFFFFF">
-  Book review
-       </font>
-    </h1>
-   
-     <!--Veido navigāciju-->
-     <nav>
-     <ul>
-       <li class="li2"><a href="Aksels.html" class="hover">Aksels</a></li>
-       <li class="li2"><a href="Sofija.html" class="hover">Sofija</a></li>
-      <li class="li2"><a href="Rojs.html" class="hover">Rojs</a></li>
-       <li class="li2"><a href="Matīss.html" class="hover">Matīss</a></li>
-      </ul>
-     </nav>
-     
-     
-    
-    </header>       
-         
-   
-    
-      
-    
-    
-    </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Connect Phantom Wallet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+      background-color: #f4f4f4;
+    }
 
+    #connectButton {
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #8c66fc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    #connectButton:hover {
+      background-color: #6c4bd3;
+    }
+
+    #walletAddress {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #333;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <button id="connectButton">Connect Phantom Wallet</button>
+  <p id="walletAddress"></p>
+
+  <script>
+    document.getElementById('connectButton').addEventListener('click', async function () {
+      if (window.solana && window.solana.isPhantom) {
+        try {
+          const resp = await window.solana.connect();
+          const publicKey = resp.publicKey.toString();
+          document.getElementById('walletAddress').innerText = 'Connected wallet: ' + publicKey;
+        } catch (err) {
+          console.error('Connection failed:', err);
+        }
+      } else {
+        alert('Phantom Wallet not found. Please install it from https://phantom.app/');
+        window.open('https://phantom.app/', '_blank');
+      }
+    });
+  </script>
+</body>
 </html>
